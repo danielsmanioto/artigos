@@ -22,3 +22,20 @@ Com isso, é possível:
 ds-clientes-server/      -> branch main
 wt-feature-ai/           -> branch feature/ai
 wt-hotfix-login/         -> branch hotfix/login
+```
+
+## Comandos basicos
+```
+git worktree list
+```
+
+```
+git worktree add -b feature/ai ../wt-feature-ai
+```
+
+```
+git worktree remove ../wt-feature-ai
+```
+
+
+
