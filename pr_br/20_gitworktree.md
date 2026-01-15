@@ -25,17 +25,30 @@ wt-hotfix-login/         -> branch hotfix/login
 ```
 
 ## Comandos basicos
+
+### Listar
 ```
 git worktree list
 ```
 
+### Criar worktree já criando uma branch nova
 ```
 git worktree add -b feature/ai ../wt-feature-ai
 ```
 
+### Remover
 ```
 git worktree remove ../wt-feature-ai
 ```
+
+### Limpar worktrees
+```
+git worktree prune
+```
+
+
+
+
 
 
 
