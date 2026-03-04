@@ -1,278 +1,306 @@
-## COMANDOS GIT
+# 🗂️ Git Commands — Cheat Sheet Completo
 
-### Configurações Iniciais
+> Referência rápida de comandos Git para o dia a dia. Salva e usa!
+
+---
+
+## 📋 Índice
+
+- [Configurações Iniciais](#-configurações-iniciais)
+- [Iniciar Repositório](#-iniciar-repositório)
+- [Status e Diff](#-status-e-diff)
+- [Adicionar e Comitar](#-adicionar-e-comitar)
+- [Desfazer Alterações](#-desfazer-alterações)
+- [Branches](#-branches)
+- [Merge e Rebase](#-merge-e-rebase)
+- [Push e Pull](#-push-e-pull)
+- [Tags](#-tags)
+- [Stash](#-stash)
+- [Log e Histórico](#-log-e-histórico)
+- [Fetch](#-fetch)
+- [Utilitários](#-utilitários)
+
+---
+
+## ⚙️ Configurações Iniciais
+
 ```bash
-# Listar todas as configurações
-git config --list
+git config --list                                          # Listar todas as configurações
 
-# Configurar nome globalmente
+# Globais
 git config --global user.name "Daniel Smanioto"
-
-# Configurar e-mail globalmente
 git config --global user.email "daniel.smanioto@gmail.com"
+git config --global --replace-all user.name danielsmanioto # Útil quando há config duplicada
+git config --edit --global                                 # Editar config global no editor
 
-# Configurar nome localmente (apenas neste repositório)
+# Apenas neste repositório
 git config user.name "Daniel Smanioto"
-
-# Configurar e-mail localmente (apenas neste repositório)
 git config user.email "daniel.smanioto@gmail.com"
+```
 
-# Alterar configurações de nome (recomendado quando há muitas configurações)
-git config --global --replace-all user.name danielsmanioto
+---
 
-# Editar arquivo de configurações globalmente
-git config --edit --global
+## 🚀 Iniciar Repositório
 
-INICIAR
-
-# Iniciar repositório
-git init
-
-# Visualizar repositórios remotos (por padrão, usamos o origin)
-git remote
-
-# Adicionar um repositório origin como remoto
-git remote add origin https://github.com/danielsmanioto/SOA
-
-# Subir os arquivos ao servidor remoto pela primeira vez
-git push -u origin master
-
-Clonar o Projeto
-
-# Clonar o projeto
-git clone caminho_do_projeto
-
-Status
-# Verificar o repositório local
-git status
-
-Adicionar arquivos
-# Adicionar todos os arquivos
-git add .
-
-# Adicionar arquivo index.html
-git add index.html
-
-# Visualizar as mudanças antes de adicionar
-git add -p
-
-Desfazer alteraçoes
-# Desfazer o commit
-git reset <código_do_commit>
-
-# Limpar tudo não commitado
-git reset --hard
-
-# Desatachar o arquivo (untrack)
-git reset arquivo
-
-# Tirar o arquivo index.html da área de seleção
-git reset HEAD index.html
-
-# Atualizar o git local
-git reset --hard origin/feat_o4_s1_seguranca
-
-
-Remover arquivos
-# Remover um arquivo do monitoramento do GIT
-git rm <arquivo>
-
-# Remover todos os arquivos e diretórios não rastreados
-git clean -fd
-
-### Para Saber as Branches que Pode Remover
 ```bash
-git branch --merged master # Listar branches mergiadas com a master
+git init                                          # Iniciar repositório local
+git clone <caminho_do_projeto>                    # Clonar projeto existente
 
-Renomeando arquivos
-git mv <source> <destination> # Mesmo que remover e adicionar
+git remote                                        # Listar repositórios remotos
+git remote add origin https://github.com/user/repo # Adicionar remote origin
+git push -u origin master                         # Subir arquivos pela primeira vez
+```
 
-Comitar local
-git commit # Comitar local
-git commit -m "comentário" # Comitar local com mensagem (ex: "[JIRA] - Mensagem de alteração.")
-git commit -a "" # Comitar todos os arquivos alterados
-git commit --amend # Possibilita fazer o commit novamente
+---
 
-# Commit Amend
-git commit --amend # Possibilita mudar a mensagem do commit
+## 🔍 Status e Diff
 
-Abortar
-git merge --abort # Cancelar merge e voltar ao status inicial
+```bash
+git status                                        # Verificar estado do repositório local
 
-Subir informacoes ao servidor
-git push origin <nome_da_branch> # Subir arquivos adicionados com -u
-git push # Subir arquivos ao repositório remoto
+git diff HEAD                                     # Diff do estado atual
+git diff --staged                                 # Diff dos arquivos em stage
+git diff <branch_origem> <branch_destino>         # Diff entre branches
+git diff v0.1 v0.2                               # Diff entre tags
+git diff v01_03 --name-only                       # Apenas nomes dos arquivos alterados
+```
 
-Capturar do servidor
-git pull origin <nome_da_branch> # Atualizar repositório local
-git pull # Atualizar repositório local (observação: o pull e merge são mais ou menos a mesma coisa)
+---
 
-Listar branchs
-git branch # Mostra todas as branches utilizadas e sinaliza qual você está no momento
-git branch -r # Lista todas as branches remotas
-git branch -a # Lista todas as branches remotas e locais
+## ➕ Adicionar e Comitar
 
-Verificar qual branch estou
-git branch # Mostra todas as branches utilizadas e sinaliza qual você está no momento
-git branch -r # Lista todas as branches remotas
-git branch -a # Lista todas as branches remotas e locais
+```bash
+# Adicionar
+git add .                                         # Adicionar todos os arquivos
+git add index.html                                # Adicionar arquivo específico
+git add -p                                        # Revisar mudanças antes de adicionar (interativo)
 
-Remover os Untracked
-git clean -n --Delete untracked files in the local working directory.
+# Comitar
+git commit                                        # Abre editor para mensagem
+git commit -m "[JIRA-123] - Descrição da alteração"
+git commit -a -m "mensagem"                       # Adiciona e comita todos os alterados
+git commit --amend                                # Reescrever o último commit (mensagem ou conteúdo)
+```
 
-Copiar branch
-git checkout -b <nome_branch> # Criar branch local
-git push -u origin <nome_branch> # Subir branch para o repositório remoto
+---
 
-Criar branch
-git checkout -b <nome_branch> # Criar branch local
-git push -u origin <nome_branch> # Subir branch para o repositório remoto
+## ↩️ Desfazer Alterações
 
-Remover branch
-git branch -d <nome_da_branch> # Remover branch local
-git branch -D <nome_da_branch> # Remover branch local FORÇA
-git push origin --delete <nome_da_branch> # Excluir branch remota
-git push origin :<nome_da_branch> # Excluir branch remota (outra forma)
+```bash
+git reset <hash_do_commit>                        # Desfaz commits até o hash (mantém arquivos)
+git reset --hard                                  # Descarta TUDO que não foi commitado ⚠️
+git reset --hard origin/feat_branch               # Sincroniza local com remoto (descarta local) ⚠️
+git reset HEAD index.html                         # Tira arquivo do stage (unstage)
+git reset <arquivo>                               # Desatacha arquivo do tracking
 
-Remover todas as branchs
-for i in $(git branch --list "SV*"); do git branch -D $i; done;
+git revert <hash>                                 # Reverte commit criando um novo commit (safe)
+git revert HEAD~1                                 # Reverte o último commit
 
-Rebase
-git rebase master desenvolvimento # Atualiza branch com as alterações da desenvolvimento
-git pull --rebase # Não é obrigatório, mas facilita a vida do desenvolvedor que precisa olhar o histórico de commits
+git checkout -- benchmarks.rb                     # Descarta alterações de um arquivo específico
+```
 
-Trocae de branchs
-git checkout master # Vai para o branch master
-git checkout -- benchmarks.rb # Fazer checkout do arquivo benchmarks.rb
+---
 
-Merge
-git merge origin <branch> # Merge
-git merge clean_up # Merge
+## 🌿 Branches
 
-Merge tool
-git mergetool --tool -help
+```bash
+# Listar
+git branch                                        # Branches locais (★ = atual)
+git branch -r                                     # Branches remotas
+git branch -a                                     # Todas (locais + remotas)
+git branch --merged master                        # Branches já mergiadas com master
 
-ignorar arquivos com gitignore
-Criar um arquivo chamado .gitignore e colocar o nome dos arquivos dentro (este arquivo fica na raiz do projeto).
+# Criar e trocar
+git checkout -b <nome_branch>                     # Cria e já vai pra branch
+git checkout master                               # Volta para master
+git push -u origin <nome_branch>                  # Sobe nova branch pro remoto
 
-Exemplo:
-.classpath
-.project
-.settings/
-.meta
-.recommenders/
-target/
-*.ser
+# Remover
+git branch -d <nome_branch>                       # Remove local (com validação)
+git branch -D <nome_branch>                       # Remove local FORÇADO ⚠️
+git push origin --delete <nome_branch>            # Remove remota
+git push origin :<nome_branch>                    # Remove remota (forma alternativa)
 
-Reverter apos commit
-git revert <hash> # Reverter alteração pelo hash de commits antigos
-git revert HEAD~1
+# Remover várias branches de uma vez (ex: padrão "SV*")
+for i in $(git branch --list "SV*"); do git branch -D $i; done
 
-Diff
-git diff v0.1 v0.2 # Diferença entre as duas tags
-git diff HEAD  
-git diff <branch_origem> <branch_destino> # Verifica diferenças entre branches
-git diff --staged
-git diff v01_03 --name-only # Mostrar diferenças apenas nos nomes
+# Renomear arquivo
+git mv <origem> <destino>
+```
 
-Navegar por bugs
-git bisect
+---
 
-Verificar arquivos controlados
-git ls-files
+## 🔀 Merge e Rebase
 
-Log
-git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -10 # Os 10 objetos mais alterados do seu projeto
-git log --pretty=format: --name-only | sort | uniq -c | sort -rg  # Os objetos e quantos commits tiveram no seu projeto
-git log -g --grepfgit ls-files="BAU-338" --name-only # Objetos alterados da versão
+```bash
+# Merge
+git merge origin <branch>
+git merge clean_up
+git merge --abort                                 # Cancelar merge em andamento
+
+# Merge tool (resolver conflitos)
+git mergetool --tool-help                         # Lista ferramentas disponíveis
+
+# Rebase
+git rebase master desenvolvimento                 # Atualiza branch com alterações da master
+git pull --rebase                                 # Pull com rebase (histórico mais limpo)
+```
+
+---
+
+## 📤 Push e Pull
+
+```bash
+git push origin <nome_branch>                     # Subir branch específica
+git push                                          # Subir branch atual (se já tem tracking)
+
+git pull origin <nome_branch>                     # Atualizar local com branch específica
+git pull                                          # Atualizar branch atual
+```
+
+---
+
+## 🏷️ Tags
+
+```bash
+git tag v01_01                                    # Criar tag
+git push origin v01_01                            # Subir tag para remoto
+git checkout v01_01                               # Ir para a tag
+git tag -l "v*"                                  # Listar tags (com filtro)
+git tag --delete v01_01                           # Remover tag
+```
+
+---
+
+## 📦 Stash
+
+```bash
+git stash                                         # Guarda alterações sem commitar
+git stash save 'nome do stash'                    # Guarda com nome descritivo
+git stash list                                    # Lista todos os stashes
+git stash apply                                   # Aplica o stash mais recente
+git stash apply --index                           # Aplica mantendo o stage
+git stash pop                                     # Aplica e remove da pilha
+git stash drop stash@{0}                          # Remove stash específico
+git stash clear                                   # Remove TODOS os stashes ⚠️
+```
+
+---
+
+## 📜 Log e Histórico
+
+```bash
+# Básico
+git log                                           # Log completo
+git log -1                                        # Último commit
+git log --oneline                                 # Resumido (hash + mensagem)
+git log --stat                                    # Arquivos modificados por commit
+git log --stat -p                                 # Detalhado (com diff)
+git log --graph                                   # Visualização em árvore
+
+# Filtros por autor/data
+git log -1 --author dsmanioto
+git log --author dsmanioto
+git log --since=30.minutes                        # Aceita: 1.hour, 2.hours, etc.
+git log --since=10.hours --until=2.hours
+git log --before="2010-12-25"
+
+# Filtros por mensagem
 git log --all --grep='Build 0051'
-git log develop..pre_release_5.49.0 # Log dos commits branch ante branch
-git log # Visualizar todos os logs
-git log -1 # Visualizar a última alteração
-git log -1 arquivo # Visualiza a última alteração do arquivo 
-git log --pretty=format:"%h %an %s" pom.xml # Alteração do arquivo
-git log -1 --author dsmanioto # Visualizar últimas alterações do autor
-git log --author dsmanioto # Visualizar todas as alterações do autor
-git log --stat # Mostra o que foi modificado em cada commit
-git log --stat -p # Mostra o que foi modificado em cada commit (mais detalhado)
-git log --graph # Mostra gráfico do log
-git log --oneline # Visualiza os logs mostrando o hash do commit e a mensagem
-git log --pretty=oneline # Visualiza os logs mostrando o hash do commit e a mensagem
-git log --pretty=format:"%h %an %s" # Exibe os logs no formato hash, autor, mensagem de commit
-git log --since=30.minutes ou 1.hour ou 2.hours # Exibe commits dos últimos 30 minutos, 1h ou 2h
-git log --since=10.hours --until=2.hours # Exibe commits entre as últimas 10h e últimas 2h
-git log --before="2010-12-25" # Exibe commits antes do dia 25/12/2010
-git reflog # Mostra commits apagados pelo git reset
-git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --oneline # Gráfico
+git log --oneline | grep SCC-289
 
-Quando foi primeiro commiit
-# Continuação
+# Formato customizado
+git log --pretty=format:"%h %an %s"               # hash | autor | mensagem
+git log --pretty=format:"%h %an %s" pom.xml       # ...em arquivo específico
 
-### Quando Foi o Primeiro Commit Neste Projeto
+# Log bonito com gráfico (salva como alias!)
+git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --oneline
+
+# Commits apagados
+git reflog                                        # Mostra commits removidos pelo reset
+
+# Entre branches/tags
+git log develop..pre_release_5.49.0
+git log --date=relative --reverse --format="%ad" | head -n1  # Primeiro commit do projeto
+
+# Primeiro e último commit
+git log --date=relative --reverse --format="Primeiro commit: %ad" | head -n1 \
+  && git log --date=relative --format="Ultimo commit: %ad" | head -n1
+```
+
+---
+
+## 🔎 Contribuições por Arquivo/Autor
+
 ```bash
-git log --date=relative --reverse --format="%ad" | head -n1
+# Contribuições de cada autor em um arquivo
+git blame --line-porcelain <ARQUIVO> | sed -n 's/^author //p' | sort | uniq -c | sort -rn
 
-Primeiro e ultimo commit
-git log --date=relative --reverse --format="Primeiro commit: %ad" | head -n1 && git log --date=relative --format="Ultimo commit: %ad" | head -n1
+# Top 10 arquivos mais alterados no projeto
+git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -10
 
-numero de contribuicoes de cada auythor por arquivo
-git blame --line-porcelain <NOME-DO-ARQUIVO>| sed -n 's/^author //p' | sort | uniq -c | sort -rn
+# Todos os arquivos e quantidade de commits
+git log --pretty=format: --name-only | sort | uniq -c | sort -rg
 
-Listar os arquivos versionados
-git ls-files
+# Commits por dev
+git shortlog -s -n                                # Geral
+git shortlog -sn --since=1.month.ago --until=today # No mês atual
+git shortlog -sn --no-merges                      # Sem merges
+git shortlog -sne                                 # Com e-mail
+git shortlog -s -n --since "AUG 01 2020"          # A partir de uma data
+git shortlog -s -n --author daniel.smanioto       # De um autor específico
+git shortlog -s -n --no-merges --author daniel.smanioto
 
-Listar quantidades de alteracoes por pessoas
-for FILENAME in $(git ls-files)
-do
-  echo ${FILENAME}
-  git blame --line-porcelain ${FILENAME} | sed -n 's/^author //p' | sort | uniq -c | sort -rn
-done 
-git log --oneline | grep SCC-289 # Procurar por mensagem de commit
+# Contribuições por pessoa em todos os arquivos
+for FILENAME in $(git ls-files); do
+  echo "${FILENAME}"
+  git blame --line-porcelain "${FILENAME}" | sed -n 's/^author //p' | sort | uniq -c | sort -rn
+done
+```
 
-### Quantidade de Commits por Devs
+---
+
+## 📡 Fetch
+
 ```bash
-git shortlog -s -n # Quantidade de commit por dev
-git shortlog -sn --since=1.month.ago --until=today # Quantidade de commit por dev no mês
-git shortlog -sn --no-merges # Quantidade de commit por dev sem merges
-git shortlog -sne # Quantidade de commit por dev - com mais informações
-git shortlog -s -n --since "AUG 01 2020" # Quantidade de commits por dev após determinada data 
-git shortlog -s -n --author daniel.smanioto # Quantidade de commit do usuário danielsmanioto
-git shortlog -s -n --no-merges --author daniel.smanioto # Quantidade de commit do usuário danielsmanioto sem merge
+git fetch <nome_branch>                           # Busca branch específica do remoto
+git fetch --all                                   # Busca tudo do remoto
+git fetch --all -p                                # Busca tudo e remove branches deletadas no remoto
+```
 
-Visulizar alterados com detalhe
-git whatchanged
-git whatchanged -p # Visualizar o que foi alterado em cada arquivo
+---
 
-Tags
-git tag v01_01 # Criar 
-git push origin v01_01 # Subir
-git checkout v01_01 # Ir para a tag
-git tag -l v # Para a tag
-git tag --delete v01_01 # Remover a tag
+## 🛠️ Utilitários
 
-Show
-git show # Visualizar alteração do último commit
+```bash
+# Arquivos
+git ls-files                                      # Lista arquivos versionados
+git rm <arquivo>                                  # Remove arquivo do tracking
+git clean -fd                                     # Remove arquivos e dirs não rastreados ⚠️
+git clean -n                                      # Simula o clean (dry-run, seguro)
 
-Stash
-git stash # Limpar o diretório de trabalho e pode voltar depois
-git stash save 'nome do stash'  # Salva o stash igual o comando git stash porém aplica um nome
-git stash apply # Aplicar stash atual
-git stash list # Listar os stashs feitos
-git stash apply --index 
-git stash drop stash@{0}  # Apagar stash 0
-git stash pop # Para aplicar o stash e logo em seguida apagá-lo da sua pilha
-git stash clear # Limpar todos
+# Inspecionar
+git show                                          # Alterações do último commit
+git whatchanged                                   # O que foi alterado
+git whatchanged -p                                # Com detalhes de cada arquivo
+git cat-file -p <pasta+hash>                      # Inspeciona objeto pelo hash
 
-Fetch - Obter Tudo que o Servidor Tem que o Local Não
-git fetch nomebranch # Obter tudo que o servidor tem que o local não
-git fetch --all # Executar antes de fazer o checkout de uma branch
-git fetch --all -p # Atualiza as branches e remove as que não são mais usadas
+# Navegar por bugs
+git bisect                                        # Busca binária para encontrar o commit do bug
 
-Hash
-git cat-file -p pasta+hash # Visualizar conteúdo pelo hash
-git cat-file -p f066f6f33c4333301e09bc0f01ed9a0e050ceb25 # Exemplo de visualizar o conteúdo da pasta f0 e
+# .gitignore
+# Crie na raiz do projeto com os padrões a ignorar:
+# .classpath
+# .project
+# .settings/
+# target/
+# *.ser
+```
 
+---
 
-
-
-
+> 💡 **Dica:** Salve o log bonito como alias:
+> ```bash
+> git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --oneline"
+> ```
+> Aí é só rodar `git lg` 🚀
