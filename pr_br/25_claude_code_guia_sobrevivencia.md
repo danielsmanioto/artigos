@@ -1,193 +1,148 @@
 # 🆘 Claude Code - Guia de Sobrevivência
 
-> SOS: Situações de Crise + Soluções Rápidas com Claude Code
+> Um guia rápido com comandos, atalhos e recursos que realmente funcionam no Claude Code para uso diário no desenvolvimento.
 
 ---
 
-## 🚨 EMERGÊNCIAS
+## 🚀 COMEÇAR AQUI
 
-### ❌ Não entendo esse código
+### ❌ Primeiro acesso em um projeto?
 
 ```bash
-# 1. Quick check
-/explain src/arquivo.ts
+# 1. Inicialize o projeto
+/init
 
-# 2. Mais específico (linhas)
-/explain src/arquivo.ts:20-50
+# Cria CLAUDE.md para Claude entender melhor o projeto
+# Faça isso UMA VEZ por repositório
+```
 
-# 3. Ainda não entendeu?
-# Mensagem normal: "Explique passo a passo essa função"
+---
 
-# 4. Se tá muito complicado
+### ❌ Não entendo esse código?
+
+```bash
+# 1. Referencie o arquivo
+@src/arquivo.ts
+
+# 2. Peça explicação em mensagem normal
+# "Explique passo a passo essa função"
+# "Como funciona este método?"
+
+# 3. Se quiser focar em uma parte
+# "Explique as linhas 20-50 deste arquivo"
+```
+
+---
+
+### ❌ Código tá uma bagunça?
+
+```bash
+# 1. Peça refatoração
 # Mensagem: "Refatore este código para ser mais legível"
+
+# 2. Revisar mudanças
+/review
+
+# 3. Se tá muito ruim, voltar
+# Esc + Esc (abre checkpoints)
 ```
 
 ---
 
-### ❌ Código tá uma bagunça
+### ❌ Tenho um bug e não consigo achar?
 
 ```bash
-# 1. Analisar completamente
-/analyze
+# 1. Referencie os arquivos suspeitos
+@src/buggy-file.ts
 
-# 2. Se tá muito confuso
-# Mensagem: "Por favor, refatore e organize este código"
+# 2. Descreva o problema
+# "Encontre o bug: quando o usuário clica em X, acontece Y"
 
-# 3. Revisar depois
-/code-review
-
-# 4. Se tá tudo errado, desfazer
-# Ctrl+Z (undo) ou volta o arquivo anterior
+# 3. Revisar solução
+/review
 ```
 
 ---
 
-### ❌ Preciso fazer código mas não sei como
-
-```bash
-# 1. Procurar padrão similar
-/find "*.tsx"  # Procura componentes React
-/grep "useEffect"  # Procura hooks
-
-# 2. Entender padrão
-/explain src/componente_similar.tsx
-
-# 3. Pedir ajuda ao Claude
-# Mensagem: "Crie um componente similar a este, mas para XYZ"
-
-# 4. Revisar resultado
-/code-review
-```
-
----
-
-### ❌ Tá lento demais, preciso de velocidade
-
-```bash
-# Ativar modo rápido
-/fast
-
-# Agora Claude responde mais rápido
-# Use para:
-✓ Tarefas simples
-✓ Exploração rápida
-✓ Respostas rápidas
-
-# Desativar depois:
-/fast (toggle)
-```
-
----
-
-### ❌ Tenho um bug e não consigo achar
-
-```bash
-# 1. Procurar por pistas
-/grep "erro"
-/grep "null"
-/grep "undefined"
-
-# 2. Entender arquivo suspeito
-/explain src/buggy-file.ts
-
-# 3. Pedir ao Claude:
-# Mensagem: "Encontre o bug neste código"
-
-# 4. Revisar solução
-/code-review
-```
-
----
-
-### ❌ Preciso revisar segurança
+### ❌ Preciso revisar segurança?
 
 ```bash
 # 1. Análise de segurança
 /security-review
 
-# 2. Procurar por problemas comuns
-/grep "password"
-/grep "token"
-/grep "secret"
-/grep "API_KEY"
-
-# 3. Se encontrou algo:
-# Mensagem: "Como resolver este problema de segurança?"
+# Procura por:
+# - SQL Injection
+# - XSS
+# - Secrets expostos
+# - Problemas de autenticação
+# - Más práticas de segurança
 ```
 
 ---
 
-### ❌ Código muito grande, não sei por onde começa
+### ❌ Novo projeto, não sei por onde começa?
 
 ```bash
-# 1. Analisar projeto
-/analyze
+# 1. Inicialize
+/init
 
-# 2. Explorar estrutura
-/find .
+# 2. Referencie arquivos principais
+@README.md
+@package.json
+@src/
 
-# 3. Entender arquivo principal
-/explain src/index.ts
+# 3. Peça ao Claude
+# "Explique a estrutura deste projeto"
+# "Qual é a arquitetura utilizada?"
 
-# 4. Explorar componentes
-/find "src/**/*.tsx"
-
-# 5. Guardar contexto
-/remember Stack: [seu stack aqui]
+# 4. Guardar contexto
+/memory
+# Salve o que aprendeu
 ```
 
 ---
 
-### ❌ Preciso fazer refatoração mas com cuidado
+### ❌ Refatoração é arriscada?
 
 ```bash
-# 1. Entender código atual
-/explain src/old-file.ts
+# 1. Antes de começar
+/review
 
-# 2. Pedir refatoração detalhada
-# Mensagem: "Refatore este arquivo para usar padrão XYZ, mantendo mesma funcionalidade"
-
-# 3. Revisar mudanças
-/code-review
-
-# 4. Se tudo bem, testar
+# 2. Execute os testes
 ! npm test
+
+# 3. Peça refatoração mantendo funcionalidade
+# "Refatore para usar padrão XYZ, testes devem passar"
+
+# 4. Revisar novamente
+/review
+
+# 5. Testar
+! npm test
+
+# 6. Se quebrou, voltar
+# Esc + Esc (checkpoints)
 ```
 
 ---
 
-### ❌ Não sei que tecnologia usar
-
-```bash
-# 1. Guardar contexto
-/remember Stack atual: [tecnologias existentes]
-
-# 2. Pedir sugestão
-# Mensagem: "Para fazer XYZ, qual tecnologia usar? Considerando nosso stack"
-
-# 3. Claude sugere algo
-# Você aprova ou quer alternativa
-```
-
----
-
-## 🔍 INVESTIGAÇÃO
+## 🔍 EXPLORAÇÃO & CONTEXTO
 
 ### Qual é o padrão deste projeto?
 
 ```bash
-# 1. Explorar estrutura
-/find .
+# 1. Referencie arquivos principais
+@src/
+@package.json
+@README.md
 
-# 2. Ver padrões de nomeclatura
-/grep "export"
-/grep "import"
+# 2. Peça ao Claude
+# "Qual é o padrão de arquitetura?"
+# "Como os componentes estão organizados?"
 
-# 3. Entender um arquivo exemplo
-/explain src/componente_principal.tsx
-
-# 4. Guardar padrão
-/remember Padrão: [descrição do padrão encontrado]
+# 3. Guardar aprendizado
+/memory
+# Salve o padrão identificado
 ```
 
 ---
@@ -195,33 +150,12 @@
 ### Como essa função funciona?
 
 ```bash
-# 1. Explicar função
-/explain src/arquivo.ts
+# 1. Referencie o arquivo
+@src/arquivo.ts
 
-# 2. Se muito grande, especificar:
-/explain src/arquivo.ts:10-30
-
-# 3. Ver onde é usada
-/grep "nome_da_funcao"
-
-# 4. Entender chamadas
-# Procure cada chamada com /explain
-```
-
----
-
-### Qual é melhor prática para fazer isso?
-
-```bash
-# 1. Procurar exemplos no projeto
-/grep "padrão"
-/find "*.exemplo.*"
-
-# 2. Entender exemplo
-/explain src/exemplo.ts
-
-# 3. Guardar aprendizado
-/remember Melhor prática: [descrição]
+# 2. Peça explicação
+# "Explique passo a passo como essa função funciona"
+# "Qual é o propósito dessa classe?"
 ```
 
 ---
@@ -229,11 +163,27 @@
 ### Que mudanças foram feitas?
 
 ```bash
-# Mensagem ao Claude:
-# "Resuma as mudanças que você fez neste código"
+# 1. Ver diferenças
+/diff
 
-# Ou:
-/code-review  # Mostra mudanças e análise
+# 2. Ou revisar
+/review
+
+# Ambos mostram tudo que foi modificado
+```
+
+---
+
+### Adicionar contexto permanente
+
+```bash
+# Guardar informações importantes
+/memory
+
+# Exemplos:
+# Stack: Node 18 + TypeScript + React 18
+# Padrão: Usar composition over inheritance
+# Restrição: Sem console.log em produção
 ```
 
 ---
@@ -246,14 +196,14 @@
 # 1. Rodar testes
 ! npm test
 
-# 2. Ver qual falhou
-# Ler mensagem de erro
+# 2. Compartilhar erro com Claude
+# Referencie o arquivo + mensagem
+@src/arquivo.ts
 
-# 3. Pedir ajuda
-# Mensagem: "Por que este teste está falhando? [erro aqui]"
+# "Por que este teste está falhando? [erro aqui]"
 
-# 4. Revisar solução
-/code-review
+# 3. Revisar solução
+/review
 ```
 
 ---
@@ -261,14 +211,14 @@
 ### Preciso escrever testes
 
 ```bash
-# 1. Entender o que testar
-/explain src/funcao.ts
+# 1. Referencie o arquivo
+@src/funcao.ts
 
-# 2. Pedir testes ao Claude
-# Mensagem: "Escreva testes abrangentes para esta função"
+# 2. Peça testes
+# "Escreva testes abrangentes para esta função"
 
 # 3. Revisar testes
-/code-review
+/review
 
 # 4. Rodar
 ! npm test
@@ -276,20 +226,17 @@
 
 ---
 
-### Cobertura de testes baixa
+### Executar testes frequentemente
 
 ```bash
-# 1. Identificar áreas sem teste
-# Mensagem: "Qual parte deste código não tem testes?"
+# Rodar testes
+! npm test
 
-# 2. Claude sugere
-/analyze  # Pode mostrar gaps
+# Rodar com coverage
+! npm run test:coverage
 
-# 3. Pedir testes para gaps
-# Mensagem: "Escreva testes para as partes não cobertas"
-
-# 4. Adicionar testes
-# Claude adiciona
+# Rodar testes específicos
+! npm test -- --testNamePattern="nome do teste"
 ```
 
 ---
@@ -687,7 +634,9 @@ Lembre-se:
 *Última atualização: 2024*
 
 **Quando tudo falha:** Leia este guia de novo, mais lentamente. 🧘
+
 **Quando nada funciona:** Use `/analyze` + `/code-review`. ❤️
+
 **Quando desespero total:** Peça ajuda ao Claude! 💬
 
 ---
