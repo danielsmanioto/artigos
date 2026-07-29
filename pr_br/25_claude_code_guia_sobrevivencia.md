@@ -122,6 +122,7 @@
 
 # 6. Se quebrou, voltar
 # Esc + Esc (checkpoints)
+
 ```
 
 ---
@@ -196,14 +197,14 @@
 # 1. Rodar testes
 ! npm test
 
-# 2. Compartilhar erro com Claude
-# Referencie o arquivo + mensagem
-@src/arquivo.ts
+# 2. Ver qual falhou
+# Ler mensagem de erro
 
-# "Por que este teste está falhando? [erro aqui]"
+# 3. Pedir ajuda
+# Mensagem: "Por que este teste está falhando? [erro aqui]"
 
-# 3. Revisar solução
-/review
+# 4. Revisar solução
+/code-review
 ```
 
 ---
@@ -211,14 +212,14 @@
 ### Preciso escrever testes
 
 ```bash
-# 1. Referencie o arquivo
-@src/funcao.ts
+# 1. Entender o que testar
+/explain src/funcao.ts
 
-# 2. Peça testes
-# "Escreva testes abrangentes para esta função"
+# 2. Pedir testes ao Claude
+# Mensagem: "Escreva testes abrangentes para esta função"
 
 # 3. Revisar testes
-/review
+/code-review
 
 # 4. Rodar
 ! npm test
@@ -226,17 +227,20 @@
 
 ---
 
-### Executar testes frequentemente
+### Cobertura de testes baixa
 
 ```bash
-# Rodar testes
-! npm test
+# 1. Identificar áreas sem teste
+# Mensagem: "Qual parte deste código não tem testes?"
 
-# Rodar com coverage
-! npm run test:coverage
+# 2. Claude sugere
+/analyze  # Pode mostrar gaps
 
-# Rodar testes específicos
-! npm test -- --testNamePattern="nome do teste"
+# 3. Pedir testes para gaps
+# Mensagem: "Escreva testes para as partes não cobertas"
+
+# 4. Adicionar testes
+# Claude adiciona
 ```
 
 ---
