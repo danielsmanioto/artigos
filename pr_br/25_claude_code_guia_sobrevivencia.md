@@ -36,7 +36,8 @@
 # 2. Revisar mudanças
 /review
 # 3. Se tá muito ruim, voltar
-# Esc + Esc (abre o histórico de mensagens/checkpoints)
+/rewind
+# (ou Esc + Esc) — volta código e/ou conversa pra um checkpoint anterior
 ```
 
 ---
@@ -98,7 +99,8 @@
 # 5. Testar
 ! npm test
 # 6. Se quebrou, voltar
-# Esc + Esc (histórico) ou ! git checkout -- .
+/rewind
+# ou: ! git checkout -- .
 ```
 
 ---
@@ -134,11 +136,13 @@
 
 ### Que mudanças foram feitas?
 ```bash
-# 1. Ver diferenças via git
+# 1. Diff interativo do próprio Claude Code (uncommitted + diff por turno)
+/diff
+# 2. Ou via git puro
 ! git diff
-# 2. Ou revisar com o Claude
-/review
-# /review analisa e comenta; ! git diff mostra o diff cru
+# 3. Pra revisão comentada
+/review          # revisão rápida e read-only de uma PR do GitHub
+/code-review     # revisa o diff atual atrás de bugs/cleanup (--fix aplica na hora)
 ```
 
 ---
@@ -344,7 +348,7 @@
 # 4. Testar
 ! npm test
 # 5. Se quebrou, voltar
-# Esc + Esc (histórico/checkpoints)
+/rewind
 ```
 
 ---
@@ -414,18 +418,24 @@ alias a='npm audit'
 | Situação | Comando |
 |----------|---------|
 | Iniciar projeto | `/init` |
-| Revisar mudanças | `/review` |
+| Revisar PR (rápido, read-only) | `/review` |
+| Revisar diff atual (bugs/cleanup, `--fix` aplica) | `/code-review` |
 | Revisar segurança | `/security-review` |
+| Ver diff interativo | `/diff` |
 | Editar memória do projeto | `/memory` |
 | Ver uso/contexto | `/context` |
 | Compactar histórico | `/compact` |
-| Limpar histórico | `/clear` |
-| Ver limite de uso | `/usage` |
+| Limpar histórico (mantém memória) | `/clear` |
+| Ver limite de uso / custo | `/usage` (alias `/cost`) |
 | Trocar de modelo | `/model` |
+| Ajustar nível de raciocínio | `/effort` |
+| Ativar modo rápido | `/fast` |
 | Gerenciar MCP | `/mcp` |
-| Rodar em background | `/bg` |
+| Rodar em background | `/bg` (alias de `/background`) |
 | Ver tarefas em andamento | `/tasks` |
 | Retomar sessão | `/resume` |
+| Voltar a um checkpoint | `/rewind` |
+| Entrar em modo de plano | `/plan` |
 | Rodar comando de shell | `! npm test` |
 | Ver ajuda | `/help` |
 
@@ -448,7 +458,8 @@ alias a='npm audit'
 ### Código gerado tá muito diferente do esperado
 ```bash
 # 1. Voltar
-# Esc + Esc (abre o histórico e permite voltar a um ponto anterior)
+/rewind
+# (ou Esc + Esc)
 # 2. Pedir com mais detalhes
 # Mensagem: "Faça isto mas mantendo a estrutura atual"
 # 3. Revisar resultado
@@ -587,6 +598,34 @@ Nada funcionando                😱 → /review → pedindo ajuda
 2. /compact (resumir e liberar espaço)
 3. Se travou mesmo, /clear e recomeçar com /memory já salvo
 ```
+
+---
+
+## 🎁 MAIS COMANDOS QUE VALE CONHECER
+
+Esses não entram no fluxo do dia a dia, mas resolvem situações específicas:
+
+| Comando | Pra que serve |
+|---------|----------------|
+| `/doctor` | Diagnostica e conserta problemas de instalação/config (aliás `/checkup`) |
+| `/agents` | Criar/gerenciar subagentes especializados |
+| `/add-dir <path>` | Dar acesso a outra pasta na mesma sessão |
+| `/config` | Configurações gerais (tema, modelo padrão, estilo de saída) — aliás `/settings` |
+| `/permissions` | Regras de permissão de ferramentas (allow/ask/deny) |
+| `/status` | Versão, modelo, conta e conectividade |
+| `/branch [nome]` | Ramifica a conversa atual pra tentar outro caminho sem perder a original |
+| `/fork [prompt]` | Copia a conversa pra uma sessão em background e continua trabalhando aqui também |
+| `/subtask <tarefa>` | Manda uma tarefa paralela pra um subagente que reporta de volta |
+| `/verify` | Confirma que a mudança funciona rodando o app de verdade (não só testes) |
+| `/run` | Sobe e roda seu app pra você ver a mudança funcionando |
+| `/debug` | Liga log de debug e ajuda a investigar problema na própria sessão |
+| `/skills` | Lista as skills disponíveis na sessão |
+| `/export [arquivo]` | Exporta a conversa atual como texto |
+| `/bug [descrição]` | Reporta bug ou compartilha a sessão (aliás `/share`) |
+| `/login` / `/logout` | Entrar/sair da conta Anthropic |
+| `/batch <instrução>` | Quebra uma mudança grande em várias partes e roda em paralelo, cada uma em um worktree |
+
+> Dica: digite só `/` na sessão pra ver a lista completa e atualizada — sempre tem mais do que cabe aqui.
 
 ---
 
